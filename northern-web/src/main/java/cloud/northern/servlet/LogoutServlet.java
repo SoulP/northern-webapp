@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cloud.northern.util.PropertyUtil;
-import cloud.northern.util.Utility;
+import cloud.northern.common.util.PropertyUtil;
+import cloud.northern.common.util.Utility;
 
 /**
  * Logout<br>

@@ -17,13 +17,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import cloud.northern.bean.BadRequestBean;
 import cloud.northern.bean.GitHubTokenBean;
-import cloud.northern.bean.UnauthorizedBean;
-import cloud.northern.util.ContentType;
-import cloud.northern.util.Header;
-import cloud.northern.util.PropertyUtil;
-import cloud.northern.util.Utility;
+import cloud.northern.common.bean.BadRequestBean;
+import cloud.northern.common.bean.UnauthorizedBean;
+import cloud.northern.common.util.ContentType;
+import cloud.northern.common.util.Header;
+import cloud.northern.common.util.PropertyUtil;
+import cloud.northern.common.util.Utility;
 
 /**
  * GitHub OAuth
@@ -31,7 +31,7 @@ import cloud.northern.util.Utility;
  * @author SoulP
  *
  */
-@Path("GitHub")
+@Path("auth/GitHub")
 public class GitHubOAuth {
 
     @Context

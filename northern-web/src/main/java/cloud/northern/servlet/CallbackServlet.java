@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cloud.northern.bean.AWSOAuthTokenBean;
-import cloud.northern.util.ContentType;
-import cloud.northern.util.Header;
-import cloud.northern.util.PropertyUtil;
-import cloud.northern.util.Utility;
+import cloud.northern.common.util.ContentType;
+import cloud.northern.common.util.Header;
+import cloud.northern.common.util.PropertyUtil;
+import cloud.northern.common.util.Utility;
 
 /**
  * Callback from OAuth
