@@ -18,7 +18,7 @@
 
 	<servlet-mapping>
 		<servlet-name>Rest</servlet-name>
-		<url-pattern>/auth/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- CGI -->

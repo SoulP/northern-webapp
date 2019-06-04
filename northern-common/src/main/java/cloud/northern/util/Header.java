@@ -1,7 +1,7 @@
 package cloud.northern.util;
 
 public enum Header {
-    CONTENT_TYPE("Content-Type"), AUTHORIZATION("Authorization");
+    CONTENT_TYPE("Content-Type"), AUTHORIZATION("Authorization"), ACCEPT("Accept");
 
     String value;
 

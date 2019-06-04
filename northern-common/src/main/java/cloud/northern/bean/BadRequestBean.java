@@ -9,31 +9,13 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class BadRequestBean {
-    private final int    code = 400;
-    private final String name = "Bad Request";
-    private String       error;
-
+public class BadRequestBean extends AError {
     public BadRequestBean() {
+        code = 400;
+        name = "Bad Request";
     }
 
     public BadRequestBean(String error) {
         this.error = error;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getName() {
-        return name;
     }
 }
