@@ -69,7 +69,6 @@ public class GitHubOAuth {
 
         if (code != null) {
             Map<String, String> headers = new LinkedHashMap<String, String>();
-            headers.put(Header.CONTENT_TYPE.toString(), ContentType.POST.getValue());
             headers.put(Header.ACCEPT.toString(), ContentType.JSON.getValue());
 
             Map<String, String> parameters = new LinkedHashMap<String, String>();
