@@ -31,7 +31,7 @@ import cloud.northern.common.util.Utility;
  * @author SoulP
  *
  */
-@Path("auth/GitHub")
+@Path("GitHub")
 public class GitHubOAuth {
 
     @Context
