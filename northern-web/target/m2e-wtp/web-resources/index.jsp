@@ -20,7 +20,7 @@
         try {
             userInfo = Utility.httpGet(url, headers);
         } catch (IOException e) {
-            response.sendRedirect(PropertyUtil.get("base.url") + "/logout");
+            //response.sendRedirect(PropertyUtil.get("base.url") + "/logout");
         }
     }
 %>

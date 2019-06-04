@@ -3,6 +3,7 @@
 	<name>northern-web</name>
 	<comment></comment>
 	<projects>
+		<project>northern-common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
