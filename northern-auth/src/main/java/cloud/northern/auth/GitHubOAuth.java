@@ -14,12 +14,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import cloud.northern.bean.GitHubTokenBean;
-import cloud.northern.common.bean.BadRequestBean;
-import cloud.northern.common.bean.UnauthorizedBean;
 import cloud.northern.common.util.ContentType;
 import cloud.northern.common.util.Header;
 import cloud.northern.common.util.PropertyUtil;
@@ -60,18 +57,19 @@ public class GitHubOAuth {
 
     @GET
     @Path("callback")
-    public Response callback(@QueryParam("code") String code, @QueryParam("state") String State) throws IOException {
+    public void callback(@QueryParam("code") String code, @QueryParam("state") String State) throws IOException {
         String state = request.getParameter("state");
         if (state == null) {
-            return Response.status(Status.BAD_REQUEST).entity(new BadRequestBean("state is null")).build();
+            response.sendError(Status.BAD_REQUEST.getStatusCode(), "state is null");
         }
 
         if (!state.equals(request.getSession().getAttribute("state"))) {
-            return Response.status(Status.UNAUTHORIZED).entity(new UnauthorizedBean("invalid state")).build();
+            response.sendError(Status.UNAUTHORIZED.getStatusCode(), "invalid state");
         }
 
         if (code != null) {
             Map<String, String> headers = new LinkedHashMap<String, String>();
+            headers.put(Header.CONTENT_TYPE.toString(), ContentType.POST.getValue());
             headers.put(Header.ACCEPT.toString(), ContentType.JSON.getValue());
 
             Map<String, String> parameters = new LinkedHashMap<String, String>();
@@ -81,11 +79,11 @@ public class GitHubOAuth {
             parameters.put("redirect_uri", PropertyUtil.get("github.oauth.redirect_uri"));
             parameters.put("state", state);
 
-            String json;
+            String json = "";
             try {
-                json = Utility.httpPost(PropertyUtil.get("github.oauth.authorize_url"), headers, parameters);
+                json = Utility.httpPost(PropertyUtil.get("github.oauth.token_url"), headers, parameters);
             } catch (IOException e) {
-                return Response.status(Status.UNAUTHORIZED).entity(new UnauthorizedBean("invalid code")).build();
+                response.sendError(Status.UNAUTHORIZED.getStatusCode(), "invalid code");
             }
 
             GitHubTokenBean oauthToken = Utility.json2obj(json, GitHubTokenBean.class);
@@ -100,7 +98,5 @@ public class GitHubOAuth {
         }
 
         response.sendRedirect(PropertyUtil.get("base.url"));
-
-        return null;
     }
 }
