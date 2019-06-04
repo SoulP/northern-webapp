@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cloud.northern.common.util.PropertyUtil;
+import cloud.northern.common.util.Utility;
 
 /**
  * Login<br>
@@ -42,6 +43,9 @@ public class LoginServlet extends HttpServlet {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+
+        Utility.setCookie(request, response, "provider", "Cognito", null, 60 * 60 * 24 * 7,
+                PropertyUtil.get("base.domain"), null, true);
 
         response.sendRedirect(location);
     }

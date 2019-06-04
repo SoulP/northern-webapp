@@ -3,24 +3,37 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.LinkedHashMap"%>
 <%@page import="java.io.IOException"%>
-<%@page import="cloud.northern.util.Utility"%>
-<%@page import="cloud.northern.util.PropertyUtil"%>
+<%@page import="cloud.northern.common.util.Utility"%>
+<%@page import="cloud.northern.common.util.PropertyUtil"%>
 <%
     ResourceBundle bundle = Utility.getResource(request);
+    Map<String, String> headers = new LinkedHashMap<String, String>();
 
     String accessToken = Utility.getCookie(request, "access_token");
+    String provider = Utility.getCookie(request, "provider");
     String userInfo = "null";
     if (accessToken != null && !accessToken.equals("")) {
-        Map<String, String> headers = new LinkedHashMap<String, String>();
-        headers.put("Authorization", "Bearer " + accessToken);
+        switch (provider) {
+            case "Cognito":
+                headers.put("Authorization", "Bearer " + accessToken);
 
-        String url = PropertyUtil.get("base.auth.url");
-        url += PropertyUtil.get("aws.userinfo.end_point");
+                String url = PropertyUtil.get("base.auth.url");
+                url += PropertyUtil.get("aws.userinfo.end_point");
 
-        try {
-            userInfo = Utility.httpGet(url, headers);
-        } catch (IOException e) {
-            response.sendRedirect(PropertyUtil.get("base.url") + "/logout");
+                try {
+                    userInfo = Utility.httpGet(url, headers);
+                } catch (IOException e) {
+                    response.sendRedirect(PropertyUtil.get("base.url") + "/logout");
+                }
+                break;
+            case "GitHub":
+                headers.put("Authorization", "token " + accessToken);
+                try {
+                    userInfo = Utility.httpGet(PropertyUtil.get("github.oauth.userinfo_url"), headers);
+                } catch (IOException e) {
+                    response.sendRedirect(PropertyUtil.get("base.url") + "/logout");
+                }
+                break;
         }
     }
 %>
@@ -64,7 +77,7 @@
 </head>
 <body>
 	<h1>Hello!!</h1>
-	<a href="/login"><%=bundle.getString("login")%></a>
+	<a href="/login"><%=bundle.getString("login")%></a>&nbsp;<a href="/auth/api/GitHub">GitHub</a>
 	<br>
 	<a href="/logout"><%=bundle.getString("logout")%></a>
 	<br> userInfo

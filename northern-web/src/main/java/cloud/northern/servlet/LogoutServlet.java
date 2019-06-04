@@ -28,7 +28,10 @@ public class LogoutServlet extends HttpServlet {
         location += "?client_id=" + PropertyUtil.get("aws.client_id");
         location += "&logout_uri=" + PropertyUtil.get("base.logout_uri");
 
-        Utility.setCookie(request, response, "access_token", "");
+        Utility.setCookie(request, response, "access_token", "", null, null, PropertyUtil.get("base.domain"), null,
+                true);
+        Utility.setCookie(request, response, "provider", "", null, null, PropertyUtil.get("base.domain"), null, true);
+
         response.sendRedirect(location);
     }
 }
