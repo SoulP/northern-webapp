@@ -41,7 +41,6 @@ public class GitHubOAuth {
     private HttpServletResponse response;
 
     @GET
-    @Path("/")
     public void auth() throws URISyntaxException, NoSuchAlgorithmException, IOException {
         String location = PropertyUtil.get("github.oauth.authorize_url");
         location += "?client_id=" + PropertyUtil.get("github.oauth.client_id");
