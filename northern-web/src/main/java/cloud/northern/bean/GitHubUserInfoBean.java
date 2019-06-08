@@ -45,6 +45,10 @@ public class GitHubUserInfoBean {
     private ZonedDateTime updated_at;
     private Plan          plan;
 
+    public GitHubUserInfoBean() {
+        plan = new Plan();
+    }
+
     public String getLogin() {
         return login;
     }
