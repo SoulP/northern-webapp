@@ -43,6 +43,12 @@ public class GitHubUserInfoBean {
     private long          following;
     private ZonedDateTime created_at;
     private ZonedDateTime updated_at;
+    private Long          private_gists;
+    private Long          total_private_repos;
+    private Long          owned_private_repos;
+    private Long          disk_usage;
+    private Long          collaborators;
+    private Boolean       two_factor_authentication;
     private Plan          plan;
 
     public String getLogin() {
@@ -291,6 +297,54 @@ public class GitHubUserInfoBean {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = ZonedDateTime.parse(updated_at);
+    }
+
+    public Long getPrivate_gists() {
+        return private_gists;
+    }
+
+    public void setPrivate_gists(Long private_gists) {
+        this.private_gists = private_gists;
+    }
+
+    public Long getTotal_private_repos() {
+        return total_private_repos;
+    }
+
+    public void setTotal_private_repos(Long total_private_repos) {
+        this.total_private_repos = total_private_repos;
+    }
+
+    public Long getOwned_private_repos() {
+        return owned_private_repos;
+    }
+
+    public void setOwned_private_repos(Long owned_private_repos) {
+        this.owned_private_repos = owned_private_repos;
+    }
+
+    public Long getDisk_usage() {
+        return disk_usage;
+    }
+
+    public void setDisk_usage(Long disk_usage) {
+        this.disk_usage = disk_usage;
+    }
+
+    public Long getCollaborators() {
+        return collaborators;
+    }
+
+    public void setCollaborators(Long collaborators) {
+        this.collaborators = collaborators;
+    }
+
+    public Boolean getTwo_factor_authentication() {
+        return two_factor_authentication;
+    }
+
+    public void setTwo_factor_authentication(Boolean two_factor_authentication) {
+        this.two_factor_authentication = two_factor_authentication;
     }
 
     public Plan getPlan() {
