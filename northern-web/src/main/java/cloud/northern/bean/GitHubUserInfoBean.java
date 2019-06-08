@@ -45,10 +45,6 @@ public class GitHubUserInfoBean {
     private ZonedDateTime updated_at;
     private Plan          plan;
 
-    public GitHubUserInfoBean() {
-        plan = new Plan();
-    }
-
     public String getLogin() {
         return login;
     }
@@ -304,6 +300,10 @@ public class GitHubUserInfoBean {
     public void setPlan(Plan plan) {
         this.plan = plan;
     }
+
+    public Plan createPlan(String name, long space, long collaborators, long private_repos) {
+        return new Plan(name, space, collaborators, private_repos);
+    }
 }
 
 class Plan {
@@ -311,6 +311,19 @@ class Plan {
     private long   space;
     private long   collaborators;
     private long   private_repos;
+
+    public Plan() {
+        space = 0;
+        collaborators = 0;
+        private_repos = 0;
+    }
+
+    public Plan(String name, long space, long collaborators, long private_repos) {
+        this.name = name;
+        this.space = space;
+        this.collaborators = collaborators;
+        this.private_repos = private_repos;
+    }
 
     public String getName() {
         return name;
