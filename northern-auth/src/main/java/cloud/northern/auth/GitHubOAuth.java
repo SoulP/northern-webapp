@@ -72,6 +72,7 @@ public class GitHubOAuth {
 
         Map<String, String> headers = new LinkedHashMap<String, String>();
         headers.put(Header.ACCEPT.toString(), ContentType.JSON.getValue());
+        headers.put(Header.CONTENT_TYPE.toString(), ContentType.POST.getValue());
 
         Map<String, String> parameters = new LinkedHashMap<String, String>();
         parameters.put("client_id", PropertyUtil.get("github.oauth.client_id"));
