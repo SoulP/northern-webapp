@@ -34,6 +34,14 @@
                     response.sendRedirect(PropertyUtil.get("base.url") + "/logout");
                 }
                 break;
+            case "Discord":
+                headers.put("Authorization", "Bearer " + accessToken);
+                try {
+                    userInfo = Utility.httpGet(PropertyUtil.get("discord.oauth.userinfo_url"), headers);
+                } catch (IOException e) {
+                    response.sendRedirect(PropertyUtil.get("base.url") + "/logout");
+                }
+                break;
         }
     }
 %>
@@ -77,7 +85,9 @@
 </head>
 <body>
 	<h1>Hello!!</h1>
-	<a href="/login"><%=bundle.getString("login")%></a>&nbsp;<a href="/auth/api/GitHub">GitHub</a>
+	<a href="/login"><%=bundle.getString("login")%></a>&nbsp;
+	<a href="/auth/api/GitHub">GitHub</a>&nbsp;
+	<a href="/auth/api/Discord">Discord</a>
 	<br>
 	<a href="/logout"><%=bundle.getString("logout")%></a>
 	<br> userInfo

@@ -30,6 +30,8 @@ public class LogoutServlet extends HttpServlet {
 
         Utility.setCookie(request, response, "access_token", "", null, null, PropertyUtil.get("base.domain"), null,
                 true);
+        Utility.setCookie(request, response, "refresh_token", "", null, null, PropertyUtil.get("base.domain"), null,
+                true);
         Utility.setCookie(request, response, "provider", "", null, null, PropertyUtil.get("base.domain"), null, true);
 
         response.sendRedirect(location);
