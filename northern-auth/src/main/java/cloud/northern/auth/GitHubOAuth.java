@@ -57,8 +57,7 @@ public class GitHubOAuth {
 
     @GET
     @Path("callback")
-    public void callback(@QueryParam("code") String code, @QueryParam("state") String State) throws IOException {
-        String state = request.getParameter("state");
+    public void callback(@QueryParam("code") String code, @QueryParam("state") String state) throws IOException {
         if (state == null) {
             response.sendError(Status.BAD_REQUEST.getStatusCode(), "state is null");
         }
