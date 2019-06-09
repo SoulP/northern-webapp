@@ -67,35 +67,38 @@ public class GitHubOAuth {
             response.sendError(Status.UNAUTHORIZED.getStatusCode(), "invalid state");
         }
 
-        if (code != null) {
-            Map<String, String> headers = new LinkedHashMap<String, String>();
-            headers.put(Header.ACCEPT.toString(), ContentType.JSON.getValue());
-
-            Map<String, String> parameters = new LinkedHashMap<String, String>();
-            parameters.put("client_id", PropertyUtil.get("github.oauth.client_id"));
-            parameters.put("client_secret", PropertyUtil.get("github.oauth.client_secret"));
-            parameters.put("code", code);
-            parameters.put("redirect_uri", PropertyUtil.get("github.oauth.redirect_uri"));
-            parameters.put("state", state);
-
-            String json = "";
-            try {
-                json = Utility.httpPost(PropertyUtil.get("github.oauth.token_url"), headers, parameters);
-            } catch (IOException e) {
-                response.sendError(Status.UNAUTHORIZED.getStatusCode(), "invalid code");
-            }
-
-            GitHubTokenBean oauthToken = Utility.json2obj(json, GitHubTokenBean.class);
-            if (oauthToken.getAccess_token() == null || oauthToken.getAccess_token().equals("")) {
-                throw new IOException("error: access_token is null");
-            }
-
-            Utility.setCookie(request, response, "provider", "GitHub", null, 60 * 60 * 24 * 7,
-                    PropertyUtil.get("base.domain"), null, true);
-            Utility.setCookie(request, response, "access_token", oauthToken.getAccess_token(), null, 60 * 60 * 24 * 7,
-                    PropertyUtil.get("base.domain"), null, true);
+        if (code == null) {
+            response.sendError(Status.BAD_REQUEST.getStatusCode(), "code is null");
         }
+
+        Map<String, String> headers = new LinkedHashMap<String, String>();
+        headers.put(Header.ACCEPT.toString(), ContentType.JSON.getValue());
+
+        Map<String, String> parameters = new LinkedHashMap<String, String>();
+        parameters.put("client_id", PropertyUtil.get("github.oauth.client_id"));
+        parameters.put("client_secret", PropertyUtil.get("github.oauth.client_secret"));
+        parameters.put("code", code);
+        parameters.put("redirect_uri", PropertyUtil.get("github.oauth.redirect_uri"));
+        parameters.put("state", state);
+
+        String json = "";
+        try {
+            json = Utility.httpPost(PropertyUtil.get("github.oauth.token_url"), headers, parameters);
+        } catch (IOException e) {
+            response.sendError(Status.UNAUTHORIZED.getStatusCode(), "invalid code");
+        }
+
+        GitHubTokenBean oauthToken = Utility.json2obj(json, GitHubTokenBean.class);
+        if (oauthToken.getAccess_token() == null || oauthToken.getAccess_token().equals("")) {
+            throw new IOException("error: access_token is null");
+        }
+
+        Utility.setCookie(request, response, "provider", "GitHub", null, 60 * 60 * 24 * 7,
+                PropertyUtil.get("base.domain"), null, true);
+        Utility.setCookie(request, response, "access_token", oauthToken.getAccess_token(), null, 60 * 60 * 24 * 7,
+                PropertyUtil.get("base.domain"), null, true);
 
         response.sendRedirect(PropertyUtil.get("base.url"));
     }
+
 }
